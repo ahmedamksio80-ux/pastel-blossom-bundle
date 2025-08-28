@@ -63,7 +63,7 @@ const FocusTimer = () => {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isActive, minutes, seconds, sessions, totalTime]);
+  }, [isActive, minutes, seconds, sessions, totalTime, selectedDuration, collectedPlants]);
 
   const toggle = () => setIsActive(!isActive);
 
