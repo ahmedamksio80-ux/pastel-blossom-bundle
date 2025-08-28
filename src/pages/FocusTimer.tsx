@@ -3,7 +3,7 @@ import { Play, Pause, RotateCcw, Sprout, Settings, Flower2 } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
 
 const FocusTimer = () => {
   const [selectedDuration, setSelectedDuration] = useState(25);
@@ -87,8 +87,8 @@ const FocusTimer = () => {
     return '🌱';
   };
 
-  const handleDurationChange = (duration: string) => {
-    const newDuration = parseInt(duration);
+  const handleDurationChange = (value: number[]) => {
+    const newDuration = value[0];
     setSelectedDuration(newDuration);
     if (!isActive) {
       setMinutes(newDuration);
@@ -123,17 +123,22 @@ const FocusTimer = () => {
                 <Settings className="cute-icon" />
                 <h3 className="text-lg font-semibold">Timer Duration</h3>
               </div>
-              <Select value={selectedDuration.toString()} onValueChange={handleDurationChange} disabled={isActive}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="15">15 minutes</SelectItem>
-                  <SelectItem value="25">25 minutes</SelectItem>
-                  <SelectItem value="45">45 minutes</SelectItem>
-                  <SelectItem value="60">60 minutes</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">1 min</span>
+                  <span className="text-lg font-medium">{selectedDuration} minutes</span>
+                  <span className="text-sm text-muted-foreground">120 min</span>
+                </div>
+                <Slider
+                  value={[selectedDuration]}
+                  onValueChange={handleDurationChange}
+                  max={120}
+                  min={1}
+                  step={1}
+                  disabled={isActive}
+                  className="w-full"
+                />
+              </div>
             </Card>
 
             {/* Timer Display */}
